@@ -35,26 +35,5 @@ public class SecurityProperties {
 		private long refreshTokenValidity;
 	}
 
-	private Cors cors = new Cors();
-
-	@Data
-	static class Cors {
-
-		private boolean enabled;
-
-		private boolean allowCredentials = false;
-
-		private List<CorsMapping> mappings = new ArrayList<>();
-	}
-
-	@Data
-	static class CorsMapping {
-
-		private String pathPattern;
-
-		private List<String> allowedOrigins;
-
-		private List<String> allowedMethods;
-	}
-
+	
 }

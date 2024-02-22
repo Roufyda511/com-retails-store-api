@@ -1,10 +1,7 @@
 package eg.retail.store.security;
 
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -17,16 +14,11 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.servlet.config.annotation.CorsRegistration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import eg.retail.store.config.SwaggerProperties;
 import eg.retail.store.exception.handler.DefaultAccessDeniedHandler;
-import eg.retail.store.security.SecurityProperties.CorsMapping;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -63,10 +55,7 @@ public class SecurityConfig {
 			http.addFilterBefore(jwtFilter(jwtUtil()), UsernamePasswordAuthenticationFilter.class);
 		}
 
-		if (securityProperties.getCors().isEnabled()) {
-			http.cors();
-		}
-
+		
 		// Security customizations
 		http.csrf().disable().formLogin().disable().logout().disable().httpBasic().disable().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -88,37 +77,7 @@ public class SecurityConfig {
 		return http.build();
 	}
 
-	@Bean
-	@ConditionalOnProperty(name = "ted.security.cors.enabled", havingValue = "true")
-	public WebMvcConfigurer corsConfigurer() {
-
-		return new WebMvcConfigurer() {
-
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-
-				List<CorsMapping> corsMappings = securityProperties.getCors().getMappings();
-
-				corsMappings.forEach(mapping -> {
-					List<String> allowedMethods = mapping.getAllowedMethods();
-					if (!CollectionUtils.isEmpty(allowedMethods)) {
-						buildAllowedOrigin(registry, mapping)
-								.allowedMethods(allowedMethods.stream().toArray(String[]::new));
-					} else {
-						buildAllowedOrigin(registry, mapping);
-					}
-				});
-			}
-
-			private CorsRegistration buildAllowedOrigin(CorsRegistry registry, CorsMapping mapping) {
-				CorsRegistration corsRegistration = registry.addMapping(mapping.getPathPattern())
-						.allowedOrigins(mapping.getAllowedOrigins().stream().toArray(String[]::new));
-				if (securityProperties.getCors().isAllowCredentials())
-					corsRegistration.allowCredentials(true);
-				return corsRegistration;
-			}
-		};
-	}
+	
 
 	@Bean
 	public AuthenticationEntryPoint authenticationEntryPoint() {
@@ -137,13 +96,11 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	@ConditionalOnMissingBean
 	public JWTUtil jwtUtil() {
 		return new JWTUtil(objectMapper(), securityProperties);
 	}
 
 	@Bean
-	@ConditionalOnMissingBean
 	public JWTFilter jwtFilter(JWTUtil jwtUtil) {
 		return new JWTFilter(jwtUtil, securityProperties);
 	}

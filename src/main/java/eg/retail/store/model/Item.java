@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Items implements Serializable{
+public class Item implements Serializable{
 	
 	/**
 	 * 

@@ -50,14 +50,6 @@ management:
 
 
 # ===============================================
-# =  Security config
-# ===============================================
-jwt:
-  secret: unsecured # // TODO replace with jasypt
-  token:
-    validity: 3600 # in seconds
-    
-# ===============================================
 # = Swagger config
 # ===============================================
 store:
@@ -66,7 +58,7 @@ store:
     title: "Retail Store REST API"
     description: " Retail Store REST API"
     version: 1.0.0
-    ted:
+
   # ===============================================
   # = Security config
   # ===============================================
@@ -77,7 +69,11 @@ store:
       - "/internal/**"
       - "/h2-console/**"
       - "/login/**"
-      
+    jwt-auth:
+      enabled: true
+      secret-key: retail-store-secret # To be replaced
+      token-validity: 1800 # in seconds (default: 30 min)
+         
     
 # ===============================================
 # = General logging config

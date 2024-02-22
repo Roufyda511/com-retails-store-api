@@ -47,7 +47,7 @@ public class Bill implements Serializable{
 	private String marketName;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "bill")
-	private List<Items> itemsList;
+	private List<Item> itemsList;
 	
 
 }
