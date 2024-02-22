@@ -1,5 +1,6 @@
 package eg.retail.store.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -23,8 +24,13 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Bill {
+public class Bill implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name = "ID")
 	private int id ;

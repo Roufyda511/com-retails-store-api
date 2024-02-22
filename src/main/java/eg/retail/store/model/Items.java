@@ -1,5 +1,7 @@
 package eg.retail.store.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,8 +21,13 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Items {
+public class Items implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1013545522310635636L;
+
 	@Id
 	@Column(name = "ID")
 	private int id ;
