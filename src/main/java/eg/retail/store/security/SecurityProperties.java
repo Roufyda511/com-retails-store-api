@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import lombok.Data;
 
 @Data
-@ConfigurationProperties(prefix = "ted.security")
+@ConfigurationProperties(prefix = "store.security")
 public class SecurityProperties {
 
 	private String[] adminEndpoints = new String[] {};

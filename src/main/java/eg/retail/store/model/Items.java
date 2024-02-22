@@ -35,8 +35,6 @@ public class Items {
 	@Column
 	private int Price;
 	
-	@Column
-	private int amount;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "Bill_ID")
