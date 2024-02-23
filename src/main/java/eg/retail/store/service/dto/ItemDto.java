@@ -24,13 +24,13 @@ public class ItemDto {
 	private String name;
 	
 	
-	private int price;
+	private double price;
 	
 	private int amount;
 	
-	private int priceBeforeDiscount;
+	private double priceBeforeDiscount;
 	
-	private int priceAfterDiscount;
+	private double priceAfterDiscount;
 	
 	
 	

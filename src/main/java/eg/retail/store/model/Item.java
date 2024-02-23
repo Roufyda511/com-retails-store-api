@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,19 +33,28 @@ public class Item implements Serializable{
 	@Column(name = "ID")
 	private int id ;
 	
+	
+	
 	@Column
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	private ItemType Type;
 	
 	@Column
+	@NotNull
 	private String name;
 	
 	@Column
-	private int Price;
+	@NotNull
+	private double Price;
 	
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "Bill_ID")
 	private Bill bill;
+	
+	@Column
+	@NotNull
+	private String code;
 
 }

@@ -1,6 +1,5 @@
 package eg.retail.store.service.dto;
 
-import java.util.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -18,14 +17,18 @@ public class BillDto {
 
 	private int purchuser;
 	
-	private int discountAmount;
+	private String discountAmount;
 	
 
-	private Date creationDate;
+	private String creationDate;
 	
 	
 	private String marketName;
 	
-	private List<ItemDto> itemDtoList;
+	private double totalBeforeDiscount;
+	
+	private double totalAfterDiscount;
+	
+	private List<ItemDto> itemsList;
 
 }

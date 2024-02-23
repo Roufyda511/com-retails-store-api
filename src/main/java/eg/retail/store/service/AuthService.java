@@ -19,7 +19,7 @@ public class AuthService {
 	public String createToken(int userId) {
 		AppUser use = new AppUser(String.valueOf(userId), "", new ArrayList<>());
 		Authentication authentication = new UsernamePasswordAuthenticationToken(use, "", use.getAuthorities());
-		return jwtUtil.createToken(authentication, false);
+		return "bearer "+jwtUtil.createToken(authentication, false);
 		
 	}
 }

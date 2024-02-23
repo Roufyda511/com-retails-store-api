@@ -42,7 +42,6 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class JWTUtil {
 
-	private static final String TOKEN = "token";
 	private static final String LANGUAGE_KEY = "defaultUserLanguage";
 	private static final String ROLES_KEY = "roles";
 	private static final String ROLE_GROUPS_KEY = "roleGroups";
@@ -166,17 +165,6 @@ public class JWTUtil {
 		return null;
 	}
 
-	public String resolveTokenFromCookie(HttpServletRequest request) {
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if (TOKEN.equals(cookie.getName())) {
-					return cookie.getValue();
-				}
-			}
-		}
-		return null;
-	}
 	
 	public static void main(String arg[]) {
 		

@@ -39,9 +39,9 @@ public class Bill implements Serializable{
 	@JoinColumn(name = "PURCHUSER_ID")
 	private Purchuser purchuser;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	
 	@Column(name = "Creation_DATE")
-	private Date creationDate;
+	private Long creationDate;
 	
 	@Column(name = "MARKET_NAME")
 	private String marketName;

@@ -36,11 +36,7 @@ public class JWTFilter extends OncePerRequestFilter {
 			String jwtToken = "";
 			log.info("JWTFilter for request {}", request.getRequestURI());
 
-			if (securityProperties.getJwtAuth().isCookieEnabled()) {
-				jwtToken = jwtUtil.resolveTokenFromCookie(request);
-			} else {
-				jwtToken = jwtUtil.resolveToken(request);
-			}
+			jwtToken = jwtUtil.resolveToken(request);
 
 			if (StringUtils.hasText(jwtToken) && jwtUtil.validateToken(jwtToken)) {
 
