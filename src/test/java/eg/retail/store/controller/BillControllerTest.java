@@ -141,7 +141,7 @@ public class BillControllerTest {
 
 				.andExpect(MockMvcResultMatchers.jsonPath("$.refId", IsNull.notNullValue()))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.timestamp", IsNull.notNullValue()))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.httpStatus", Is.is(HttpStatus.BAD_REQUEST.name())));
+				.andExpect(MockMvcResultMatchers.jsonPath("$.httpStatus", Is.is(HttpStatus.NOT_FOUND.name())));
 	}
 	
 	@Test

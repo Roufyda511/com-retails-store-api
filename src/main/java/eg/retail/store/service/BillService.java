@@ -63,7 +63,7 @@ public class BillService {
 					.totalAfterDiscount(totalAfterDiscount).totalBeforeDiscount(totalBeforeDiscount).build();
 
 		} else {
-			throw new FunctionalException(HttpStatus.BAD_REQUEST, "retails.store.invalid.billId");
+			throw new FunctionalException(HttpStatus.NOT_FOUND, "retails.store.invalid.billId");
 		}
 
 	}

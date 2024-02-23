@@ -24,7 +24,7 @@
 		<spring-cloud.version>2021.0.7</spring-cloud.version>
 		<springdoc.version>1.7.0</springdoc.version>
 		<sonar.exclusions>
-			**/*Application.java,**/model/**,**/dto/**,**/config/**,**/exception/**,**/cache/**
+			**/*Application.java,**/model/**,**/dto/**,**/config/**,**/exception/**,**/cache/**,**/secutity/**
 		</sonar.exclusions>
 	</properties>
 	<dependencies>
