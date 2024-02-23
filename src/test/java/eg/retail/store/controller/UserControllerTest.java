@@ -47,7 +47,7 @@ public class UserControllerTest {
 	void WhenGetBillWithInvalidUserId_ThenCorrectResult() throws Exception {
 
 		// When
-		mockMvc.perform(get("/api/login/test").contextPath(CONTEXT_PATH).with(user("123"))
+		mockMvc.perform(get("/api/login/test").contextPath(CONTEXT_PATH).with(user("test"))
 				.contentType(MediaType.APPLICATION_JSON)).andDo(print())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.code", Is.is("common.validation.typeMismatch")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.level", Is.is("ERROR")))
@@ -56,5 +56,7 @@ public class UserControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.timestamp", IsNull.notNullValue()))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.httpStatus", Is.is(HttpStatus.BAD_REQUEST.name())));
 	}
+	
+	
 
 }

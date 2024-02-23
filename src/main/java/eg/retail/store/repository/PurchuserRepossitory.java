@@ -4,6 +4,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import eg.retail.store.model.Purchuser;
 
-public interface PurchuserPepository  extends CrudRepository<Purchuser, Integer>{
+public interface PurchuserRepossitory extends CrudRepository<Purchuser,Integer> {
+	
+	
 
 }

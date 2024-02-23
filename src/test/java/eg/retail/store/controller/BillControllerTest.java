@@ -2,10 +2,12 @@ package eg.retail.store.controller;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 import org.hamcrest.core.Is;
 import org.hamcrest.core.IsNull;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -21,6 +23,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import eg.retail.store.RetailsStoreApiApplication;
+import eg.retail.store.repository.BillRepossitory;
+import eg.retail.store.repository.ItemPepository;
+import eg.retail.store.repository.PurchuserRepossitory;
 
 @AutoConfigureMockMvc
 @SpringBootTest(classes = RetailsStoreApiApplication.class)
@@ -32,6 +37,15 @@ public class BillControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
+	
+	@Autowired
+	private BillRepossitory billRepossitory;
+	
+	@Autowired
+	private PurchuserRepossitory purchuserPepository;
+	
+	@Autowired
+	private ItemPepository itemPepository;
 
 	@Test
 	void WhenGetBillForCustomerLessThantwoYears_ThenDiscountShouldBe0() throws Exception {
@@ -124,5 +138,28 @@ public class BillControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.refId", IsNull.notNullValue()))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.timestamp", IsNull.notNullValue()))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.httpStatus", Is.is(HttpStatus.BAD_REQUEST.name())));
+	}
+	
+	@Test
+	void WhenGetBillWithinvalidMethod_ThenCorrectResult() throws Exception {
+
+		// When
+		mockMvc.perform(post("/api/bill/123").contextPath(CONTEXT_PATH).header(HttpHeaders.AUTHORIZATION, "MOCK")
+				.with(user("123")).contentType(MediaType.APPLICATION_JSON)).andDo(print())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.code", Is.is("common.validation.httpRequestMethodNotSupported")))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.level", Is.is("ERROR")))
+
+				.andExpect(MockMvcResultMatchers.jsonPath("$.refId", IsNull.notNullValue()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.timestamp", IsNull.notNullValue()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.httpStatus", Is.is(HttpStatus.METHOD_NOT_ALLOWED.name())));
+	}
+	
+	@AfterAll
+	void cleanup() {
+		itemPepository.deleteAll();
+		billRepossitory.deleteAll();
+		purchuserPepository.deleteAll();
+		
+		
 	}
 }

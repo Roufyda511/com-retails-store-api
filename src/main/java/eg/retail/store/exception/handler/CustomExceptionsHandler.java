@@ -386,23 +386,6 @@ public class CustomExceptionsHandler {
 		return errors;
 	}
 
-	@ExceptionHandler(MissingRequestCookieException.class)
-	public ResponseEntity<ErrorMessage> handleMissingRequestCookieException(MissingRequestCookieException ex) {
-
-		ErrorMessage em = new ErrorMessage(HttpStatus.BAD_REQUEST, ErrorCode.MISSING_COOKIE);
-
-		em.setAttributes(Arrays.asList(new Attribute("missingCookieField", ex.getCookieName())));
-
-		// logging
-		if (log.isDebugEnabled()) {
-			log.warn("MissingRequestCookieException occurs with message [RefId: {}]: {}", em.getRefId(),
-					ex.getMessage(), ex);
-		} else {
-			log.warn("MissingRequestCookieException occurs with message [RefId: {}]: {}", em.getRefId(),
-					ex.getMessage());
-		}
-
-		return new ResponseEntity<>(em, createHeaders(), em.getHttpStatus());
-	}
+	
 
 }
