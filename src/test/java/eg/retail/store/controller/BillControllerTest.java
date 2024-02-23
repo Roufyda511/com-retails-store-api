@@ -105,7 +105,25 @@ public class BillControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.purchuser", Is.is(4)))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.discountAmount", Is.is("5%")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.totalBeforeDiscount", Is.is(305.5)))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.totalAfterDiscount", Is.is(294.725)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.totalAfterDiscount", Is.is(284.725)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.creationDate", Is.is("23/02/2024 13:19:36")))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.marketName", Is.is("GO")))
+
+		;
+	}
+	
+	@Test
+	void WhenGetBillwithAmountlessthan100AndCustomerLessThantwoyears_ThenNoDiscountWillBeApplied() throws Exception {
+
+		// When
+		mockMvc.perform(get("/api/bill/5").contextPath(CONTEXT_PATH).header(HttpHeaders.AUTHORIZATION, "MOCK")
+				.with(user("123")).contentType(MediaType.APPLICATION_JSON)).andDo(print())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.itemsList.size()", Is.is(3)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.billId", Is.is(5)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.purchuser", Is.is(1)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.discountAmount", Is.is("0%")))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.totalBeforeDiscount", Is.is(90.0)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.totalAfterDiscount", Is.is(90.0)))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.creationDate", Is.is("23/02/2024 13:19:36")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.marketName", Is.is("GO")))
 
@@ -116,7 +134,7 @@ public class BillControllerTest {
 	void WhenGetBillWithInvalidBillId_ThenCorrectResult() throws Exception {
 
 		// When
-		mockMvc.perform(get("/api/bill/5").contextPath(CONTEXT_PATH).header(HttpHeaders.AUTHORIZATION, "MOCK")
+		mockMvc.perform(get("/api/bill/6").contextPath(CONTEXT_PATH).header(HttpHeaders.AUTHORIZATION, "MOCK")
 				.with(user("123")).contentType(MediaType.APPLICATION_JSON)).andDo(print())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.code", Is.is("retails.store.invalid.billId")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.level", Is.is("ERROR")))

@@ -24,15 +24,17 @@ import eg.retail.store.service.dto.BillDto;
 import eg.retail.store.service.dto.ItemDto;
 import eg.retail.store.util.LocalDateTimeFormatter;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 @Service
 @AllArgsConstructor
+@Log4j2
 public class BillService {
 
 	private final BillRepossitory billRepossitory;
 
 	public BillDto calculatePurchuserBill(int billId) throws FunctionalException {
-
+		log.info("calculatePurchuserBill");
 		Optional<Bill> bill = billRepossitory.findById(billId);
 		if (bill.isPresent()) {
 			Bill billData = bill.get();
@@ -52,8 +54,9 @@ public class BillService {
 
 				}
 			});
-			double totalAfterDiscount = itemDtoList.stream().collect(Collectors.summingDouble(ItemDto :: getPriceAfterDiscount));
 			double totalBeforeDiscount = itemDtoList.stream().collect(Collectors.summingDouble(ItemDto :: getPriceBeforeDiscount));
+			double totalAfterDiscount = calculateTotalAmountAfterDiscount(itemDtoList);
+			
 			return BillDto.builder().creationDate(prepareCreationDate(billData.getCreationDate())).billId(billId)
 					.marketName(billData.getMarketName()).itemsList(itemDtoList)
 					.discountAmount((Integer.toString(discountValue)) + "%").purchuser(billData.getPurchuser().getId())
@@ -63,6 +66,14 @@ public class BillService {
 			throw new FunctionalException(HttpStatus.BAD_REQUEST, "retails.store.invalid.billId");
 		}
 
+	}
+
+	private double calculateTotalAmountAfterDiscount(List<ItemDto> itemDtoList) {
+		log.info("Calculate Discount based on Purchuser Type");
+		double discountBasedonPurchuserType = itemDtoList.stream().collect(Collectors.summingDouble(ItemDto :: getPriceAfterDiscount));
+		log.info("deduct 5 $ per each 100$ in amount");
+		return discountBasedonPurchuserType -(((int)(discountBasedonPurchuserType/100))*5);
+			
 	}
 
 	public static <E, K> Map<K, List<E>> groupBy(List<E> list, Function<E, K> keyFunction) {
@@ -86,6 +97,7 @@ public class BillService {
 	}
 
 	private int getPurchuserDiscountPercentage(Bill billData) {
+		
 		if (billData.getPurchuser().getPurchuserType() != PurchuserType.CUSTOMER) {
 			return billData.getPurchuser().getPurchuserType().getValue();
 		} else {
