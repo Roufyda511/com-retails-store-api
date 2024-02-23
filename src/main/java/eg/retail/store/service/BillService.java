@@ -76,11 +76,11 @@ public class BillService {
 			
 	}
 
-	public static <E, K> Map<K, List<E>> groupBy(List<E> list, Function<E, K> keyFunction) {
+	private static <E, K> Map<K, List<E>> groupBy(List<E> list, Function<E, K> keyFunction) {
 		return Optional.ofNullable(list).orElseGet(ArrayList::new).stream().collect(Collectors.groupingBy(keyFunction));
 	}
 
-	public ItemDto buildItemDto(Item item, int numberOfItems, double discount) {
+	private ItemDto buildItemDto(Item item, int numberOfItems, double discount) {
 
 		double priceBeforeDiscount = (item.getPrice() * numberOfItems);
 
