@@ -54,9 +54,10 @@ public class BillService {
 
 				}
 			});
-			double totalBeforeDiscount = itemDtoList.stream().collect(Collectors.summingDouble(ItemDto :: getPriceBeforeDiscount));
+			double totalBeforeDiscount = itemDtoList.stream()
+					.collect(Collectors.summingDouble(ItemDto::getPriceBeforeDiscount));
 			double totalAfterDiscount = calculateTotalAmountAfterDiscount(itemDtoList);
-			
+
 			return BillDto.builder().creationDate(prepareCreationDate(billData.getCreationDate())).billId(billId)
 					.marketName(billData.getMarketName()).itemsList(itemDtoList)
 					.discountAmount((Integer.toString(discountValue)) + "%").purchuser(billData.getPurchuser().getId())
@@ -70,10 +71,11 @@ public class BillService {
 
 	private double calculateTotalAmountAfterDiscount(List<ItemDto> itemDtoList) {
 		log.info("Calculate Discount based on Purchuser Type");
-		double discountBasedonPurchuserType = itemDtoList.stream().collect(Collectors.summingDouble(ItemDto :: getPriceAfterDiscount));
+		double discountBasedonPurchuserType = itemDtoList.stream()
+				.collect(Collectors.summingDouble(ItemDto::getPriceAfterDiscount));
 		log.info("deduct 5 $ per each 100$ in amount");
-		return discountBasedonPurchuserType -(((int)(discountBasedonPurchuserType/100))*5);
-			
+		return discountBasedonPurchuserType - (((int) (discountBasedonPurchuserType / 100)) * 5);
+
 	}
 
 	private static <E, K> Map<K, List<E>> groupBy(List<E> list, Function<E, K> keyFunction) {
@@ -88,7 +90,8 @@ public class BillService {
 				: priceBeforeDiscount;
 
 		return ItemDto.builder().Type(item.getType()).name(item.getName()).amount(numberOfItems).price(item.getPrice())
-				.priceAfterDiscount(priceAfterDiscount).priceBeforeDiscount(priceBeforeDiscount).build();
+				.priceAfterDiscount(Math.round(priceAfterDiscount* 100.0) / 100.0).
+				priceBeforeDiscount(Math.round(priceBeforeDiscount* 100.0) / 100.0).build();
 	}
 
 	private String prepareCreationDate(Long date) {
@@ -97,11 +100,11 @@ public class BillService {
 	}
 
 	private int getPurchuserDiscountPercentage(Bill billData) {
-		
+
 		if (billData.getPurchuser().getPurchuserType() != PurchuserType.CUSTOMER) {
 			return billData.getPurchuser().getPurchuserType().getValue();
 		} else {
-			
+
 			LocalDateTime billDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(billData.getCreationDate()),
 					TimeZone.getDefault().toZoneId());
 			int currentYear = billDate.getYear();

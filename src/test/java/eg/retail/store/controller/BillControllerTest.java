@@ -105,7 +105,7 @@ class BillControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.purchuser", Is.is(4)))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.discountAmount", Is.is("5%")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.totalBeforeDiscount", Is.is(305.5)))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.totalAfterDiscount", Is.is(284.725)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.totalAfterDiscount", Is.is(284.73)))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.creationDate", Is.is("23/02/2024 13:19:36")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.marketName", Is.is("GO")))
 

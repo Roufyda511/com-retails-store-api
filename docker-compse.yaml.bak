@@ -31,9 +31,9 @@ services:
     depends_on:
       - mongo
     ports:
-      - $SERVER_HOST_PORT:8080
+      - $SERVER_HOST_PORT:8000
     environment:
-      - SERVER_PORT=8080
+      - SERVER_PORT=8000
       - SPRING_PROFILES_ACTIVE=prod
       - SPRING_APPLICATION_NAME=$APP_NAME
       - SPRING_DATA_MONGODB_AUTHENTICATION_DATABASE=$MONGO_DB
