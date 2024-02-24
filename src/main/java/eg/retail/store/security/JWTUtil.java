@@ -9,7 +9,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -64,7 +63,7 @@ public class JWTUtil {
 		return Jwts.builder().setSubject(authentication.getName())
 				.claim(ROLES_KEY,
 						appUser.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-								.collect(Collectors.toList()))
+								.toList())
 				.setIssuedAt(new Date(currentTimeInMillis)).setExpiration(validity).setId(UUID.randomUUID().toString())
 				.signWith(SignatureAlgorithm.HS256, securityProperties.getJwtAuth().getSecretKey()).compact();
 	}
@@ -76,7 +75,7 @@ public class JWTUtil {
 		List<String> roles = getRoles(token);
 
 		if (roles != null) {
-			authorities = roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+			authorities = roles.stream().map(SimpleGrantedAuthority::new).toList();
 		}
 
 		AppUser principal = new AppUser(getSubject(token), "", authorities);
@@ -166,8 +165,6 @@ public class JWTUtil {
 	}
 
 	
-	public static void main(String arg[]) {
-		
-	}
+
 
 }

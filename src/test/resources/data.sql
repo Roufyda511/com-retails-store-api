@@ -11,6 +11,7 @@ INSERT INTO "PUBLIC"."bill" ("id","creation_date","market_name","purchuser_id")V
 INSERT INTO "PUBLIC"."bill" ("id","creation_date","market_name","purchuser_id")VALUES(3,1708694376000,'GO','3');
 INSERT INTO "PUBLIC"."bill" ("id","creation_date","market_name","purchuser_id")VALUES(4,1708694376000,'GO','4');
 INSERT INTO "PUBLIC"."bill" ("id","creation_date","market_name","purchuser_id")VALUES(5,1708694376000,'GO','1');
+INSERT INTO "PUBLIC"."bill" ("id","creation_date","market_name","purchuser_id")VALUES(6,1708694376000,'GO','1');
 
 ---Items ----
 INSERT INTO "PUBLIC"."item" ("id","price","type","name","bill_id","code")VALUES(1,20.0,'GROCERY','meet',1,'mee23');

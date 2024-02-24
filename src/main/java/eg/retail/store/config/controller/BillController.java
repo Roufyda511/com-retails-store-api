@@ -23,7 +23,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @AllArgsConstructor
 @Validated
-public class BillController {
+class BillController {
 	
 	private final BillService billService;
 	

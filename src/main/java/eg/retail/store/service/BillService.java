@@ -91,8 +91,8 @@ public class BillService {
 				.priceAfterDiscount(priceAfterDiscount).priceBeforeDiscount(priceBeforeDiscount).build();
 	}
 
-	private String prepareCreationDate(Long Date) {
-		return LocalDateTimeFormatter.convertEpochToLocalDate(Date);
+	private String prepareCreationDate(Long date) {
+		return LocalDateTimeFormatter.convertEpochToLocalDate(date);
 
 	}
 

@@ -38,7 +38,7 @@ public class SecurityConfig {
 
 	private final SwaggerProperties swaggerProperties;
 
-	@Bean("MainSecurityFilterChain")
+	@Bean("mainSecurityFilterChain")
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		// Swagger security authorization
 		log.info("Swagger enable is {}", swaggerProperties.isEnabled());

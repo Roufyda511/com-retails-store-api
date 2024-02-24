@@ -32,7 +32,7 @@ import eg.retail.store.repository.PurchuserRepossitory;
 @ActiveProfiles("junit")
 @TestInstance(Lifecycle.PER_CLASS)
 @DirtiesContext
-public class BillControllerTest {
+class BillControllerTest {
 	private final static String CONTEXT_PATH = "/api";
 
 	@Autowired
@@ -129,12 +129,27 @@ public class BillControllerTest {
 
 		;
 	}
+	
+	@Test
+	void WhenGetBillwithNoItems_ThenBillGeneratedwiThEmptyData() throws Exception {
+
+		// When
+		mockMvc.perform(get("/api/bill/6").contextPath(CONTEXT_PATH).header(HttpHeaders.AUTHORIZATION, "MOCK")
+				.with(user("123")).contentType(MediaType.APPLICATION_JSON)).andDo(print())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.itemsList.size()", Is.is(0)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.totalBeforeDiscount", Is.is(0.0)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.totalAfterDiscount", Is.is(0.0)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.creationDate", Is.is("23/02/2024 13:19:36")))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.marketName", Is.is("GO")))
+
+		;
+	}
 
 	@Test
 	void WhenGetBillWithInvalidBillId_ThenCorrectResult() throws Exception {
 
 		// When
-		mockMvc.perform(get("/api/bill/6").contextPath(CONTEXT_PATH).header(HttpHeaders.AUTHORIZATION, "MOCK")
+		mockMvc.perform(get("/api/bill/7").contextPath(CONTEXT_PATH).header(HttpHeaders.AUTHORIZATION, "MOCK")
 				.with(user("123")).contentType(MediaType.APPLICATION_JSON)).andDo(print())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.code", Is.is("retails.store.invalid.billId")))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.level", Is.is("ERROR")))

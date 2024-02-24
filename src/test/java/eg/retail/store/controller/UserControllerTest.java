@@ -26,7 +26,7 @@ import eg.retail.store.RetailsStoreApiApplication;
 @ActiveProfiles("junit")
 @TestInstance(Lifecycle.PER_CLASS)
 @DirtiesContext
-public class UserControllerTest {
+class UserControllerTest {
 
 	private final static String CONTEXT_PATH = "/api";
 

@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-public class UserController {
+class UserController {
 	
 	private final AuthService authService;
 

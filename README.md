@@ -79,9 +79,15 @@ My Assumption
             - mvnw  jacoco:report
                 - report will be located in target
             [App_path]/com-retails-store-api/target/         coverage-reports/jacoco/index.html
+        - Run Sonar qube analysis 
+            -  first use this link to launch sonar qube server localy 
+                - https://docs.sonarsource.com/sonarqube/latest/try-out-sonarqube/
+            - mvn clean verify sonar:sonar -Dsonar.projectKey=com-retails-store-api -Dsonar.projectName='com-retails-store-api' -Dsonar.host.url=http://localhost:9000 -Dsonar.token=[generte_token]
+            - mvnw clean verify sonar:sonar -Dsonar.projectKey=com-retails-store-api -Dsonar.projectName='com-retails-store-api' -Dsonar.host.url=http://localhost:9000 -Dsonar.token=[generte_token]
         - Run & Start Application
             - mvn spring-boot:run
             - mvnw spring-boot:run
+        
 ## How To Test
 - Application should be up and running 
 - Using Postman to call APIs
