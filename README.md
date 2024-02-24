@@ -62,7 +62,7 @@ My Assumption
     http://localhost:8080/api/swagger-ui/index.html#/bill-controller/getPurchaserBill
 
 ## How to Install and Run the Project
-- clone Project ti your machine
+- clone Project in your machine
 - you should have JDK 17 installed or use intellij it detects java version from pom and install it.
 - If you are going to use STS install lombok.jar 
 - you can clean code and run from Ide
